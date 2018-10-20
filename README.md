@@ -43,7 +43,11 @@ Example:
 Example:
 
 ```json
-0
+{
+  "type": 1,
+  "id": "eIDewoi",
+  "numChoices": 5
+}
 ```
 
 ## startAttendance<a id="sec-1-2"></a>

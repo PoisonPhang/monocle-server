@@ -13,17 +13,20 @@ public class MonocleServer {
   public static CreateQuestionRequest currentQuestion;
   public static String currentQuestionId;
   public static Map questions;
+  public static TeacherServer teacherServer;
+  public static List<Map> answers;
 
   public static void main(String[] args) throws InterruptedException, IOException {
     questions = new HashMap();
+    answers = new ArrayList<Map>();
     int port = 1337; // 843 flash policy port
     try {
       port = Integer.parseInt(args[0]);
     } catch (Exception ex) {
     }
-    TeacherServer s = new TeacherServer(port);
-    s.start();
-    System.out.println("TeacherServer started on port: " + s.getPort());
+    teacherServer = new TeacherServer(port);
+    teacherServer.start();
+    System.out.println("TeacherServer started on port: " + teacherServer.getPort());
 
     //Android Socket
     ServerSocket serverSocket = new ServerSocket(1336);

@@ -3,6 +3,7 @@ package com.mhl.monocle.server.data;
 import com.google.gson.Gson;
 import com.mhl.monocle.server.MonocleServer;
 import com.mhl.monocle.server.json.DataObject;
+import com.mhl.monocle.server.json.answerQuestion.AnswerQuestionRequest;
 import com.mhl.monocle.server.json.createQuestion.CreateQuestionRequest;
 import com.mhl.monocle.server.json.createQuestion.CreateQuestionResponse;
 import com.mhl.monocle.server.json.getCurrentQuestion.CurrentQuestionRequest;
@@ -37,6 +38,9 @@ public class DataParse {
     } else if (type.equals("checkin")) {
 
     } else if (type.equals("getStudents")) {
+
+    } else if (type.equals("answerQuestion")) {
+      AnswerQuestionRequest answerQuestionRequest = gson.fromJson(request.getData(), AnswerQuestionRequest.class);
 
     }
     return new DataObject("Error", "Something went wrong");

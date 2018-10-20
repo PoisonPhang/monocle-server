@@ -2,6 +2,7 @@ package com.mhl.monocle.server;
 
 import com.google.gson.Gson;
 import com.mhl.monocle.server.data.DataParse;
+import com.mhl.monocle.server.json.DataObject;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
@@ -12,8 +13,12 @@ import org.java_websocket.server.WebSocketServer;
 
 public class TeacherServer extends WebSocketServer {
 
+  private WebSocket teacherConnection;
+  private Gson gson;
+
   public TeacherServer(int port) throws UnknownHostException {
     super(new InetSocketAddress(port));
+    gson = new Gson();
   }
 
   public TeacherServer(InetSocketAddress address) {
@@ -34,7 +39,8 @@ public class TeacherServer extends WebSocketServer {
 
   @Override
   public void onMessage(WebSocket conn, String message) {
-    Gson gson = new Gson();
+
+    teacherConnection = conn;
     System.out.println(conn + ": " + message);
     conn.send(gson.toJson(DataParse.parseJson(message)));
   }
@@ -51,6 +57,12 @@ public class TeacherServer extends WebSocketServer {
     if (conn != null) {
       // some errors like port binding failed may not be assignable to a specific websocket
     }
+  }
+
+  public void updateAttendance(DataObject dataObject) {
+    String message = gson.toJson(dataObject);
+    System.out.println(teacherConnection + ": " + message);
+    teacherConnection.send(message);
   }
 
   @Override

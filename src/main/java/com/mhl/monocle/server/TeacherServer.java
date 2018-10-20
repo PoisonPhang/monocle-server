@@ -59,7 +59,7 @@ public class TeacherServer extends WebSocketServer {
     }
   }
 
-  public void updateAttendance(DataObject dataObject) {
+  public void updateTeacher(DataObject dataObject) {
     String message = gson.toJson(dataObject);
     System.out.println(teacherConnection + ": " + message);
     teacherConnection.send(message);

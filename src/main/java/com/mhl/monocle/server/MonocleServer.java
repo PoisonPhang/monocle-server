@@ -14,11 +14,19 @@ public class MonocleServer {
   public static String currentQuestionId;
   public static Map questions;
   public static TeacherServer teacherServer;
-  public static List<Map> answers;
+  public static Map answers;
+  public static Map userSub;
+  public static Map attendance;
+  public static boolean attendanceOpen;
+  public static boolean questionOpen;
+  public static String attendanceCode;
 
   public static void main(String[] args) throws InterruptedException, IOException {
     questions = new HashMap();
-    answers = new ArrayList<Map>();
+    answers = new HashMap();
+    attendance = new HashMap();
+    attendanceOpen = false;
+    questionOpen = false;
     int port = 1337; // 843 flash policy port
     try {
       port = Integer.parseInt(args[0]);

@@ -1,6 +1,7 @@
 package com.mhl.monocle.server.json.getCurrentQuestion;
 
 public class CurrentQuestionResponse {
+
   private int type;
   private String id;
   private int numChoices;

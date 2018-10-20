@@ -1,6 +1,7 @@
 package com.mhl.monocle.server.json.getCurrentQuestion;
 
 public class CurrentQuestionRequest {
+
   private String id;
 
   public CurrentQuestionRequest(String id) {

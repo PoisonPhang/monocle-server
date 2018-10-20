@@ -1,6 +1,7 @@
 package com.mhl.monocle.server.json.startAttendance;
 
 public class StartAttendanceResponse {
+
   private int status;
   private String message;
   private String code;

@@ -1,6 +1,7 @@
 package com.mhl.monocle.server.json;
 
 public class DataObject {
+
   private String type;
   private String data;
 

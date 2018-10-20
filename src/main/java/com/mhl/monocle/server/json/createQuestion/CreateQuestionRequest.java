@@ -1,6 +1,7 @@
 package com.mhl.monocle.server.json.createQuestion;
 
 public class CreateQuestionRequest {
+
   private String question;
   private int type;
   private int numChoices;

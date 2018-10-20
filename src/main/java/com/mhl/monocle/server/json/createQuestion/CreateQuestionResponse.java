@@ -1,6 +1,7 @@
 package com.mhl.monocle.server.json.createQuestion;
 
 public class CreateQuestionResponse {
+
   private int status;
   private String message;
 

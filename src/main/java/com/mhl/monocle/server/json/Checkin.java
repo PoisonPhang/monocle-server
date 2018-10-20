@@ -1,6 +1,7 @@
 package com.mhl.monocle.server.json;
 
 public class Checkin {
+
   private String name;
   private String code;
 

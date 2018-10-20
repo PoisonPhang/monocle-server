@@ -5,24 +5,27 @@
   - [answerQuestion](#sec-1-2)
     - [Request](#sec-1-2-1)
     - [Response](#sec-1-2-2)
-  - [startAttendance](#sec-1-3)
+  - [lockQuestion](#sec-1-3)
     - [Request](#sec-1-3-1)
     - [Response](#sec-1-3-2)
-  - [stopAttendance](#sec-1-4)
+  - [startAttendance](#sec-1-4)
     - [Request](#sec-1-4-1)
     - [Response](#sec-1-4-2)
-  - [createQuestion](#sec-1-5)
+  - [stopAttendance](#sec-1-5)
     - [Request](#sec-1-5-1)
     - [Response](#sec-1-5-2)
-  - [checkin](#sec-1-6)
+  - [createQuestion](#sec-1-6)
     - [Request](#sec-1-6-1)
     - [Response](#sec-1-6-2)
-  - [checkinTeacher](#sec-1-7)
+  - [checkin](#sec-1-7)
     - [Request](#sec-1-7-1)
     - [Response](#sec-1-7-2)
-  - [getStudents](#sec-1-8)
+  - [checkinTeacher](#sec-1-8)
     - [Request](#sec-1-8-1)
     - [Response](#sec-1-8-2)
+  - [getStudents](#sec-1-9)
+    - [Request](#sec-1-9-1)
+    - [Response](#sec-1-9-2)
 
 
 # Actions<a id="sec-1"></a>
@@ -97,13 +100,45 @@ Example:
 }
 ```
 
-## startAttendance<a id="sec-1-3"></a>
+## lockQuestion<a id="sec-1-3"></a>
 
 ### Request<a id="sec-1-3-1"></a>
 
-None
+| Field | Type   | Description             |
+|----- |------ |----------------------- |
+| id    | string | The question id to lock |
+
+Example:
+
+```json
+{
+  "id": "eIdzIqo",
+}
+```
 
 ### Response<a id="sec-1-3-2"></a>
+
+| Field   | Type   | Description       |
+|------- |------ |----------------- |
+| status  | int    | 1 = Ok, 0 = Error |
+| message | string | Optional message  |
+
+Example:
+
+```json
+{
+    "status": 0,
+    "message": "ok"
+}
+```
+
+## startAttendance<a id="sec-1-4"></a>
+
+### Request<a id="sec-1-4-1"></a>
+
+None
+
+### Response<a id="sec-1-4-2"></a>
 
 | Field   | Type   | Description               |
 |------- |------ |------------------------- |
@@ -121,13 +156,13 @@ Example:
 }
 ```
 
-## stopAttendance<a id="sec-1-4"></a>
+## stopAttendance<a id="sec-1-5"></a>
 
-### Request<a id="sec-1-4-1"></a>
+### Request<a id="sec-1-5-1"></a>
 
 None
 
-### Response<a id="sec-1-4-2"></a>
+### Response<a id="sec-1-5-2"></a>
 
 | Field   | Type   | Description       |
 |------- |------ |----------------- |
@@ -143,9 +178,9 @@ Example:
 }
 ```
 
-## createQuestion<a id="sec-1-5"></a>
+## createQuestion<a id="sec-1-6"></a>
 
-### Request<a id="sec-1-5-1"></a>
+### Request<a id="sec-1-6-1"></a>
 
 | Field      | Type          | Description                             |
 |---------- |------------- |--------------------------------------- |
@@ -165,7 +200,7 @@ Example:
 }
 ```
 
-### Response<a id="sec-1-5-2"></a>
+### Response<a id="sec-1-6-2"></a>
 
 | Field   | Type   | Description       |
 |------- |------ |----------------- |
@@ -181,9 +216,9 @@ Example:
 }
 ```
 
-## checkin<a id="sec-1-6"></a>
+## checkin<a id="sec-1-7"></a>
 
-### Request<a id="sec-1-6-1"></a>
+### Request<a id="sec-1-7-1"></a>
 
 | Field | Type   | Description                          |
 |----- |------ |------------------------------------ |
@@ -196,43 +231,6 @@ Example:
 {
   "name": "Damien Appleheimer",
   "code": "dWeije18"
-}
-```
-
-### Response<a id="sec-1-6-2"></a>
-
-| Field   | Type   | Description       |
-|------- |------ |----------------- |
-| status  | int    | 1 = Ok, 0 = Error |
-| message | string | Optional message  |
-
-Example:
-
-```json
-{
-    "status": 0,
-    "message": "ok"
-}
-```
-
-## checkinTeacher<a id="sec-1-7"></a>
-
-| Field | Type   | Description                          |
-|----- |------ |------------------------------------ |
-| name  | string | Name of the user                     |
-| code  | string | Attendance code given by the teacher |
-
-### Request<a id="sec-1-7-1"></a>
-
-| Field | Type   | Description         |
-|----- |------ |------------------- |
-| name  | string | Name of the teacher |
-
-Example:
-
-```json
-{
-  "name": "Mr. Cloudypants"
 }
 ```
 
@@ -252,13 +250,50 @@ Example:
 }
 ```
 
-## getStudents<a id="sec-1-8"></a>
+## checkinTeacher<a id="sec-1-8"></a>
+
+| Field | Type   | Description                          |
+|----- |------ |------------------------------------ |
+| name  | string | Name of the user                     |
+| code  | string | Attendance code given by the teacher |
 
 ### Request<a id="sec-1-8-1"></a>
 
-None
+| Field | Type   | Description         |
+|----- |------ |------------------- |
+| name  | string | Name of the teacher |
+
+Example:
+
+```json
+{
+  "name": "Mr. Cloudypants"
+}
+```
 
 ### Response<a id="sec-1-8-2"></a>
+
+| Field   | Type   | Description       |
+|------- |------ |----------------- |
+| status  | int    | 1 = Ok, 0 = Error |
+| message | string | Optional message  |
+
+Example:
+
+```json
+{
+    "status": 0,
+    "message": "ok"
+}
+```
+
+## getStudents<a id="sec-1-9"></a>
+
+### Request<a id="sec-1-9-1"></a>
+
+None
+
+### Response<a id="sec-1-9-2"></a>
 
 | Field   | Type          | Description                      |
 |------- |------------- |-------------------------------- |

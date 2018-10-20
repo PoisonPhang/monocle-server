@@ -28,7 +28,7 @@ public class MonocleServer {
           while (true) {
               Socket sock = serverSocket.accept();
               System.out.println("Connected");
-              new Thread(new com.mhl.Android.server.AndroidServer(sock)).start();
+              new Thread(new com.mhl.monocle.server.AndroidServer(sock)).start();
 
           }
       }

@@ -54,17 +54,19 @@ None
 
 ### Response<a id="sec-1-2-2"></a>
 
-| Field   | Type   | Description       |
-|------- |------ |----------------- |
-| status  | int    | 1 = Ok, 0 = Error |
-| message | string | Optional message  |
+| Field   | Type   | Description               |
+|------- |------ |------------------------- |
+| status  | int    | 1 = Ok, 0 = Error         |
+| message | string | Optional message          |
+| code    | string | Attendance code for users |
 
 Example:
 
 ```json
 {
     "status": 0,
-    "message": "ok"
+    "message": "ok",
+    "code": "wDwoaDp"
 }
 ```
 

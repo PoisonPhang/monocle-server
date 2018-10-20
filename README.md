@@ -12,6 +12,11 @@
     - [Request](#sec-1-4-1)
     - [Response](#sec-1-4-2)
   - [checkin](#sec-1-5)
+    - [Request](#sec-1-5-1)
+    - [Response](#sec-1-5-2)
+  - [checkinTeacher](#sec-1-6)
+    - [Request](#sec-1-6-1)
+    - [Response](#sec-1-6-2)
 
 
 # Actions<a id="sec-1"></a>
@@ -136,6 +141,8 @@ Example:
 
 ## checkin<a id="sec-1-5"></a>
 
+### Request<a id="sec-1-5-1"></a>
+
 | Field | Type   | Description                          |
 |----- |------ |------------------------------------ |
 | name  | string | Name of the user                     |
@@ -147,5 +154,58 @@ Example:
 {
   "name": "Damien Appleheimer",
   "code": "dWeije18"
+}
+```
+
+### Response<a id="sec-1-5-2"></a>
+
+| Field   | Type   | Description       |
+|------- |------ |----------------- |
+| status  | int    | 1 = Ok, 0 = Error |
+| message | string | Optional message  |
+
+Example:
+
+```json
+{
+    "status": 0,
+    "message": "ok"
+}
+```
+
+## checkinTeacher<a id="sec-1-6"></a>
+
+| Field | Type   | Description                          |
+|----- |------ |------------------------------------ |
+| name  | string | Name of the user                     |
+| code  | string | Attendance code given by the teacher |
+
+### Request<a id="sec-1-6-1"></a>
+
+| Field | Type   | Description         |
+|----- |------ |------------------- |
+| name  | string | Name of the teacher |
+
+Example:
+
+```json
+{
+  "name": "Mr. Cloudypants"
+}
+```
+
+### Response<a id="sec-1-6-2"></a>
+
+| Field   | Type   | Description       |
+|------- |------ |----------------- |
+| status  | int    | 1 = Ok, 0 = Error |
+| message | string | Optional message  |
+
+Example:
+
+```json
+{
+    "status": 0,
+    "message": "ok"
 }
 ```

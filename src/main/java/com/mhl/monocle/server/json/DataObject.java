@@ -4,6 +4,16 @@ public class DataObject {
   private String type;
   private String data;
 
+  public DataObject(String type, String data) {
+    this.type = type;
+    this.data = data;
+  }
+
+  public DataObject() {
+    this.type = "[type]";
+    this.data = "[data]";
+  }
+
   public String getType() {
     return type;
   }

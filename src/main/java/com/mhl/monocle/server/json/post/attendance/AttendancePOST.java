@@ -4,20 +4,20 @@ package com.mhl.monocle.server.json.post.attendance;
  *   +-------------------------------------------------------+
  *   | Field | Type   | Description                          |
  *   |-------+--------+--------------------------------------|
- *   | name  | string | Name of the user                     |
+ *   | user  | string | Name of the user                     |
  *   | code  | string | Attendance code given by the teacher |
  *   +-------------------------------------------------------+
  */
 public class AttendancePOST {
-  private String name;
+  private String user;
   private String code;
 
-  public String getName() {
-    return name;
+  public String getUser() {
+    return user;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setUser(String user) {
+    this.user = user;
   }
 
   public String getCode() {

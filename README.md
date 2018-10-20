@@ -20,6 +20,9 @@
   - [checkinTeacher](#sec-1-7)
     - [Request](#sec-1-7-1)
     - [Response](#sec-1-7-2)
+  - [getStudents](#sec-1-8)
+    - [Request](#sec-1-8-1)
+    - [Response](#sec-1-8-2)
 
 
 # Actions<a id="sec-1"></a>
@@ -248,3 +251,17 @@ Example:
     "message": "ok"
 }
 ```
+
+## getStudents<a id="sec-1-8"></a>
+
+### Request<a id="sec-1-8-1"></a>
+
+None
+
+### Response<a id="sec-1-8-2"></a>
+
+| Field   | Type          | Description                      |
+|------- |------------- |-------------------------------- |
+| status  | int           | 1 = Ok, 0 = Error                |
+| message | string        | Optional message                 |
+| users   | array[string] | List of users who have signed in |

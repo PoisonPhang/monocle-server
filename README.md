@@ -5,10 +5,13 @@
   - [startAttendance](#sec-1-2)
     - [Request](#sec-1-2-1)
     - [Response](#sec-1-2-2)
-  - [createQuestion](#sec-1-3)
+  - [stopAttendance](#sec-1-3)
     - [Request](#sec-1-3-1)
     - [Response](#sec-1-3-2)
-  - [checkin](#sec-1-4)
+  - [createQuestion](#sec-1-4)
+    - [Request](#sec-1-4-1)
+    - [Response](#sec-1-4-2)
+  - [checkin](#sec-1-5)
 
 
 # Actions<a id="sec-1"></a>
@@ -65,9 +68,31 @@ Example:
 }
 ```
 
-## createQuestion<a id="sec-1-3"></a>
+## stopAttendance<a id="sec-1-3"></a>
 
 ### Request<a id="sec-1-3-1"></a>
+
+None
+
+### Response<a id="sec-1-3-2"></a>
+
+| Field   | Type   | Description       |
+|------- |------ |----------------- |
+| status  | int    | 1 = Ok, 0 = Error |
+| message | string | Optional message  |
+
+Example:
+
+```json
+{
+    "status": 0,
+    "message": "ok"
+}
+```
+
+## createQuestion<a id="sec-1-4"></a>
+
+### Request<a id="sec-1-4-1"></a>
 
 | Field      | Type          | Description                             |
 |---------- |------------- |--------------------------------------- |
@@ -87,7 +112,7 @@ Example:
 }
 ```
 
-### Response<a id="sec-1-3-2"></a>
+### Response<a id="sec-1-4-2"></a>
 
 | Field   | Type   | Description       |
 |------- |------ |----------------- |
@@ -103,7 +128,7 @@ Example:
 }
 ```
 
-## checkin<a id="sec-1-4"></a>
+## checkin<a id="sec-1-5"></a>
 
 | Field | Type   | Description                          |
 |----- |------ |------------------------------------ |

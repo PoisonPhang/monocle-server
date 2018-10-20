@@ -1,5 +1,7 @@
 package com.mhl.monocle.server;
 
+import com.google.gson.Gson;
+import com.mhl.monocle.server.data.DataParse;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
@@ -32,8 +34,9 @@ public class TeacherServer extends WebSocketServer {
 
   @Override
   public void onMessage(WebSocket conn, String message) {
-    conn.send(message);
+    Gson gson = new Gson();
     System.out.println(conn + ": " + message);
+    conn.send(gson.toJson(DataParse.parseJson(message)));
   }
 
   @Override

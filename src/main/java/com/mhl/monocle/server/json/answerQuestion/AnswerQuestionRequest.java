@@ -1,6 +1,7 @@
 package com.mhl.monocle.server.json.answerQuestion;
 
 public class AnswerQuestionRequest {
+
   private String id;
   private String name;
   private String answer;

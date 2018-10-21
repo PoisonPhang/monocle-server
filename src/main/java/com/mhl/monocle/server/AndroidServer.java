@@ -18,6 +18,9 @@ public class AndroidServer implements Runnable {
   public void run() {
     Gson gson = new Gson();
     try {
+      if (Thread.interrupted()) {
+        return;
+      }
       InputStream is = clientSocket.getInputStream();
       PrintWriter pw = new PrintWriter(clientSocket.getOutputStream());
       byte[] buffer = new byte[1024];
@@ -31,6 +34,8 @@ public class AndroidServer implements Runnable {
         pw.flush();
       }
 
+      is.close();
+      pw.close();
       clientSocket.close();
     } catch (IOException e) {
       System.out.println(e);

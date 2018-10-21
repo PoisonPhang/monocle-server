@@ -48,6 +48,7 @@ public class DataParse {
       Checkin checkin = gson.fromJson(request.getData(), Checkin.class);
       if (MonocleServer.attendanceOpen && checkin.getCode().equals(MonocleServer.attendanceCode)) {
         MonocleServer.attendance.put(checkin.getName(), true);
+        MonocleServer.teacherServer.updateTeacher(new DataObject("checkinResponse", checkin.getName()));
         return new DataObject("Checkin", "0");
       } else {
         MonocleServer.attendance.put(checkin.getName(), false);

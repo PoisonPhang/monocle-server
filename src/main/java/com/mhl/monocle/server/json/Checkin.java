@@ -11,7 +11,7 @@ public class Checkin {
   }
 
   public Checkin() {
-    this.name = "[name]";
+    this.name = "[namebob]";
     this.code = "[code]";
   }
 

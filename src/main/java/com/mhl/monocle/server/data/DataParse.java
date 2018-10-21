@@ -39,8 +39,8 @@ public class DataParse {
       }
     } else if (type.equals("startAttendance")) {
       MonocleServer.attendanceOpen = true;
-      MonocleServer.attendanceCode = "1337"; // TODO generate 4 digit code
-      return new DataObject("Attendance", "Attendance open");
+      MonocleServer.attendanceCode = generateAttendancePIN();
+      return new DataObject("Attendance", MonocleServer.attendanceCode);
     } else if (type.equals("stopAttendance")) {
       MonocleServer.attendanceOpen = false;
       return new DataObject("Attendance", "Attendance closed");
@@ -109,4 +109,14 @@ public class DataParse {
     return sb.toString();
   }
 
+  private static String generateAttendancePIN() {
+    String pin =  "";
+    Random random = new Random();
+
+    for (int i = 0; i < 4; i++) {
+      int num = random.nextInt(9)+1;
+      pin = pin.concat(Integer.toString(num));
+    }
+    return pin;
+  }
 }

@@ -75,10 +75,11 @@ None
 
 ### Response<a id="sec-1-2-2"></a>
 
-| Field    | Type            | Description      |
-|-------- |--------------- |---------------- |
-| question | QuestionRequest | Question details |
-| answers  | array[Answer]   | Question answers |
+| Field    | Type            | Description                            |
+|-------- |--------------- |-------------------------------------- |
+| question | QuestionRequest | Question details                       |
+| answers  | array[Answer]   | Question answers                       |
+| unlocked | boolean         | Whether the question  is locked or not |
 
 QuestionRequest:
 
@@ -88,7 +89,6 @@ QuestionRequest:
 | type       | int           | 0 = Short Answer, 1 = Multiple Choice   |
 | numChoices | int           | Number of choices                       |
 | choices    | array[string] | Answers for the multiple choicequestion |
-| unlocked   | boolean       | Whether the question  is locked or not  |
 
 Answer:
 

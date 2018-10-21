@@ -11,7 +11,7 @@
   - [startAttendance](#sec-1-4)
     - [Request](#sec-1-4-1)
     - [Response](#sec-1-4-2)
-  - [stopAttendance](#sec-1-5)
+  - [lockAttendance](#sec-1-5)
     - [Request](#sec-1-5-1)
     - [Response](#sec-1-5-2)
   - [createQuestion](#sec-1-6)
@@ -156,7 +156,7 @@ Example:
 }
 ```
 
-## stopAttendance<a id="sec-1-5"></a>
+## lockAttendance<a id="sec-1-5"></a>
 
 ### Request<a id="sec-1-5-1"></a>
 

@@ -1,6 +1,7 @@
 package com.mhl.monocle.server.json;
 
 public class Answer {
+
   private String name;
   private String answer;
 

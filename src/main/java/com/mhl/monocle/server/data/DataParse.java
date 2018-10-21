@@ -7,12 +7,12 @@ import com.mhl.monocle.server.json.Checkin;
 import com.mhl.monocle.server.json.DataObject;
 import com.mhl.monocle.server.json.GetQuestionDetailsResponse;
 import com.mhl.monocle.server.json.GetStudentsResponse;
+import com.mhl.monocle.server.json.SpeechToTextRequest;
 import com.mhl.monocle.server.json.answerQuestion.AnswerQuestionRequest;
 import com.mhl.monocle.server.json.createQuestion.CreateQuestionRequest;
 import com.mhl.monocle.server.json.createQuestion.CreateQuestionResponse;
 import com.mhl.monocle.server.json.getCurrentQuestion.CurrentQuestionRequest;
 import com.mhl.monocle.server.json.getCurrentQuestion.CurrentQuestionResponse;
-import java.util.HashMap;
 import java.util.Random;
 
 public class DataParse {
@@ -61,13 +61,18 @@ public class DataParse {
       }
       GetStudentsResponse getStudentsResponse = new GetStudentsResponse(0, "", studentNames,
           MonocleServer.attendanceOpen);
-      return new DataObject("getStudentsRespons", gson.toJson(getStudentsResponse));
+      return new DataObject("getStudentsResponse", gson.toJson(getStudentsResponse));
     } else if (type.equals("answerQuestion")) {
       if (MonocleServer.questionOpen) {
         AnswerQuestionRequest answerQuestionRequest = gson
             .fromJson(request.getData(), AnswerQuestionRequest.class);
         if (answerQuestionRequest.getId().equals(MonocleServer.currentQuestionId)) {
-          MonocleServer.answers.add(new Answer(answerQuestionRequest.getName(), answerQuestionRequest.getAnswer()));
+
+          for(int i = 0; i < MonocleServer.answers.size(); i++) {
+            if (MonocleServer.answers.get(i).getName().equals(answerQuestionRequest.getName())) {
+              MonocleServer.answers.set(i, new Answer(answerQuestionRequest.getName(), answerQuestionRequest.getAnswer()));
+            }
+          }
           MonocleServer.teacherServer.updateTeacher(request);
           return new DataObject("Success", "Question submitted");
         } else {
@@ -76,15 +81,34 @@ public class DataParse {
       }
     } else if (type.equals("lockQuestion")) {
       MonocleServer.questionOpen = false;
-      return new DataObject("Attendance", "AttendanceClosed");
+      return new DataObject("Question", "Question Polling closed");
     } else if (type.equals("getQuestionDetails")) {
-      Answer[] answersArray = new Answer[MonocleServer.answers.size()];
-      for (int i = 0; i < answersArray.length; i++) {
-        answersArray[i] = MonocleServer.answers.get(i);
+      if (MonocleServer.currentQuestion != null) {
+        Answer[] answersArray = new Answer[MonocleServer.answers.size()];
+        for (int i = 0; i < answersArray.length; i++) {
+          answersArray[i] = MonocleServer.answers.get(i);
+        }
+        GetQuestionDetailsResponse getQuestionDetailsResponse = new GetQuestionDetailsResponse(
+            MonocleServer.currentQuestion, MonocleServer.questionOpen, answersArray);
+        return new DataObject("getQuestionDetailsResponse", gson.toJson(getQuestionDetailsResponse));
+      } else {
+        GetQuestionDetailsResponse getQuestionDetailsResponse = new GetQuestionDetailsResponse(null, MonocleServer.questionOpen, new Answer[0]);
+        return new DataObject("getQuestionDetailsResponse", gson.toJson(getQuestionDetailsResponse));
       }
-      GetQuestionDetailsResponse getQuestionDetailsResponse = new GetQuestionDetailsResponse(
-          MonocleServer.currentQuestion, MonocleServer.questionOpen, answersArray);
-      return new DataObject("getQuestionDetailsResponse", gson.toJson(getQuestionDetailsResponse));
+    } else if (type.equals("removeQuestion")) {
+      MonocleServer.currentQuestionId = "0";
+      MonocleServer.currentQuestion = null;
+      return new DataObject("removeQuestionResponse", "success");
+    } else if (type.equals("getAttendanceCode")) {
+      String jsonString = "{\"code\":\""+ MonocleServer.attendanceCode + "\", \"attendanceOpen\":\"" + MonocleServer.attendanceOpen + "\"}";
+      return new DataObject("getAttendanceCodeResponse", jsonString);
+    } else if (type.equals("speechToText")) {
+      SpeechToTextRequest speechToTextRequest = gson.fromJson(request.getData(), SpeechToTextRequest.class);
+      MonocleServer.teacherServer.updateTeacher(new DataObject("speechToText", gson.toJson(speechToTextRequest)));
+      return new DataObject("SpeechToTextResponse", "Sent");
+    } else if (type.equals("shutdown")) {
+      MonocleServer.running = false;
+      return new DataObject("Goodbye", "... cruel world");
     }
     return new DataObject("Error", "Something went wrong");
   }
@@ -92,7 +116,7 @@ public class DataParse {
   private static String generateNewID() {
     char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
     Random rnd = new Random();
-    boolean pass = false;
+    boolean pass;
     StringBuilder sb;
 
     do {
@@ -110,11 +134,11 @@ public class DataParse {
   }
 
   private static String generateAttendancePIN() {
-    String pin =  "";
+    String pin = "";
     Random random = new Random();
 
     for (int i = 0; i < 4; i++) {
-      int num = random.nextInt(9)+1;
+      int num = random.nextInt(9) + 1;
       pin = pin.concat(Integer.toString(num));
     }
     return pin;

@@ -75,13 +75,27 @@ None
 
 ### Response<a id="sec-1-2-2"></a>
 
+| Field    | Type            | Description      |
+|-------- |--------------- |---------------- |
+| question | QuestionRequest | Question details |
+| answers  | array[Answer]   | Question answers |
+
+QuestionRequest:
+
 | Field      | Type          | Description                             |
 |---------- |------------- |--------------------------------------- |
 | question   | string        | Question to ask users                   |
 | type       | int           | 0 = Short Answer, 1 = Multiple Choice   |
 | numChoices | int           | Number of choices                       |
 | choices    | array[string] | Answers for the multiple choicequestion |
-| status     | boolean       | Whether the question  is locked or not  |
+| unlocked   | boolean       | Whether the question  is locked or not  |
+
+Answer:
+
+| Field  | Type   | Description              |
+|------ |------ |------------------------ |
+| name   | string | User name                |
+| answer | string | User answer for question |
 
 ## answerQuestion<a id="sec-1-3"></a>
 
@@ -314,9 +328,9 @@ None
 
 ### Response<a id="sec-1-10-2"></a>
 
-| Field   | Type          | Description                             |
-|------- |------------- |--------------------------------------- |
-| status  | int           | 1 = Ok, 0 = Error                       |
-| message | string        | Optional message                        |
-| users   | array[string] | List of users who have signed in        |
-| status  | boolean       | Whether or not the attendance is locked |
+| Field    | Type          | Description                             |
+|-------- |------------- |--------------------------------------- |
+| status   | int           | 1 = Ok, 0 = Error                       |
+| message  | string        | Optional message                        |
+| users    | array[string] | List of users who have signed in        |
+| unlocked | boolean       | Whether or not the attendance is locked |

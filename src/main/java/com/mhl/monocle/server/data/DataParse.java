@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.mhl.monocle.server.MonocleServer;
 import com.mhl.monocle.server.json.Checkin;
 import com.mhl.monocle.server.json.DataObject;
+import com.mhl.monocle.server.json.GetQuestionDetailsResponse;
 import com.mhl.monocle.server.json.GetStudentsResponse;
 import com.mhl.monocle.server.json.answerQuestion.AnswerQuestionRequest;
 import com.mhl.monocle.server.json.createQuestion.CreateQuestionRequest;
@@ -78,6 +79,10 @@ public class DataParse {
     } else if (type.equals("lockQuestion")) {
       MonocleServer.questionOpen = false;
       return new DataObject("Attendance", "AttendanceClosed");
+    } else if (type.equals("getQuestionDetails")) {
+      GetQuestionDetailsResponse getQuestionDetailsResponse = new GetQuestionDetailsResponse(
+          MonocleServer.currentQuestion, MonocleServer.questionOpen);
+      return new DataObject("getQuestionDetailsResponse", gson.toJson(getQuestionDetailsResponse));
     }
     return new DataObject("Error", "Something went wrong");
   }

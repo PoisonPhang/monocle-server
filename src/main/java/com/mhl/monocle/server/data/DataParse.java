@@ -33,9 +33,14 @@ public class DataParse {
       CurrentQuestionRequest currentQuestionRequest = gson
           .fromJson(json, CurrentQuestionRequest.class);
       if (!currentQuestionRequest.getId().equals(MonocleServer.currentQuestionId)) {
-        return new DataObject("getCurrentQuestionResponse", gson.toJson(
-            new CurrentQuestionResponse(MonocleServer.currentQuestion.getType(),
-                MonocleServer.currentQuestionId, MonocleServer.currentQuestion.getNumChoices())));
+        if (MonocleServer.currentQuestion != null) {
+          return new DataObject("getCurrentQuestionResponse", gson.toJson(
+              new CurrentQuestionResponse(MonocleServer.currentQuestion.getType(),
+                  MonocleServer.currentQuestionId, MonocleServer.currentQuestion.getNumChoices())));
+        } else {
+          CreateQuestionRequest createQuestionRequest = new CreateQuestionRequest();
+          return new DataObject("getCurrentQuestionResponse", "{\"id\":\"0\"}");
+        }
       }
     } else if (type.equals("startAttendance")) {
       MonocleServer.attendanceOpen = true;

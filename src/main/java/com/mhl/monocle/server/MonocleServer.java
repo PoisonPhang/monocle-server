@@ -1,10 +1,13 @@
 package com.mhl.monocle.server;
 
+import com.mhl.monocle.server.json.Answer;
 import com.mhl.monocle.server.json.createQuestion.CreateQuestionRequest;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -14,8 +17,7 @@ public class MonocleServer {
   public static String currentQuestionId;
   public static Map questions;
   public static TeacherServer teacherServer;
-  public static Map answers;
-  public static Map userSub;
+  public static List<Answer> answers;
   public static Map attendance;
   public static boolean attendanceOpen;
   public static boolean questionOpen;
@@ -23,7 +25,7 @@ public class MonocleServer {
 
   public static void main(String[] args) throws InterruptedException, IOException {
     questions = new HashMap();
-    answers = new HashMap();
+    answers = new ArrayList<Answer>();
     attendance = new HashMap();
     attendanceOpen = false;
     questionOpen = false;

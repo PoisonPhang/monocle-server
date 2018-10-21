@@ -2,6 +2,7 @@ package com.mhl.monocle.server.data;
 
 import com.google.gson.Gson;
 import com.mhl.monocle.server.MonocleServer;
+import com.mhl.monocle.server.json.Answer;
 import com.mhl.monocle.server.json.Checkin;
 import com.mhl.monocle.server.json.DataObject;
 import com.mhl.monocle.server.json.GetQuestionDetailsResponse;
@@ -22,14 +23,10 @@ public class DataParse {
     String type = request.getType();
 
     if (type.equals("createQuestion")) {
-      if (MonocleServer.userSub != null) {
-        MonocleServer.answers.put(MonocleServer.currentQuestionId, MonocleServer.userSub);
-      }
       MonocleServer.questionOpen = true;
       MonocleServer.currentQuestion = gson.fromJson(request.getData(), CreateQuestionRequest.class);
       MonocleServer.currentQuestionId = generateNewID();
       MonocleServer.questions.put(MonocleServer.currentQuestionId, MonocleServer.currentQuestion);
-      MonocleServer.userSub = new HashMap();
       return new DataObject("createQuestionResponse", gson
           .toJson(new CreateQuestionResponse(0, "Success")));
     } else if (type.equals("getCurrentQuestion")) {
@@ -66,22 +63,27 @@ public class DataParse {
           MonocleServer.attendanceOpen);
       return new DataObject("getStudentsRespons", gson.toJson(getStudentsResponse));
     } else if (type.equals("answerQuestion")) {
-      AnswerQuestionRequest answerQuestionRequest = gson
-          .fromJson(request.getData(), AnswerQuestionRequest.class);
-      if (answerQuestionRequest.getId().equals(MonocleServer.currentQuestionId)) {
-        MonocleServer.userSub
-            .put(answerQuestionRequest.getName(), answerQuestionRequest.getAnswer());
-        MonocleServer.teacherServer.updateTeacher(request);
-        return new DataObject("Success", "Question submitted");
-      } else {
-        return new DataObject("Error", "Question out of date");
+      if (MonocleServer.questionOpen) {
+        AnswerQuestionRequest answerQuestionRequest = gson
+            .fromJson(request.getData(), AnswerQuestionRequest.class);
+        if (answerQuestionRequest.getId().equals(MonocleServer.currentQuestionId)) {
+          MonocleServer.answers.add(new Answer(answerQuestionRequest.getName(), answerQuestionRequest.getAnswer()));
+          MonocleServer.teacherServer.updateTeacher(request);
+          return new DataObject("Success", "Question submitted");
+        } else {
+          return new DataObject("Error", "Question out of date");
+        }
       }
     } else if (type.equals("lockQuestion")) {
       MonocleServer.questionOpen = false;
       return new DataObject("Attendance", "AttendanceClosed");
     } else if (type.equals("getQuestionDetails")) {
+      Answer[] answersArray = new Answer[MonocleServer.answers.size()];
+      for (int i = 0; i < answersArray.length; i++) {
+        answersArray[i] = MonocleServer.answers.get(i);
+      }
       GetQuestionDetailsResponse getQuestionDetailsResponse = new GetQuestionDetailsResponse(
-          MonocleServer.currentQuestion, MonocleServer.questionOpen);
+          MonocleServer.currentQuestion, MonocleServer.questionOpen, answersArray);
       return new DataObject("getQuestionDetailsResponse", gson.toJson(getQuestionDetailsResponse));
     }
     return new DataObject("Error", "Something went wrong");

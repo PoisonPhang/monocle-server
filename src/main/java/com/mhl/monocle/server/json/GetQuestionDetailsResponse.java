@@ -1,21 +1,25 @@
 package com.mhl.monocle.server.json;
 
+import com.mhl.monocle.server.MonocleServer;
 import com.mhl.monocle.server.json.createQuestion.CreateQuestionRequest;
 
 public class GetQuestionDetailsResponse {
 
   private CreateQuestionRequest question;
-  private boolean status;
+  private boolean unlocked;
+  private Answer[] answers;
 
   public GetQuestionDetailsResponse(
-      CreateQuestionRequest question, boolean status) {
+      CreateQuestionRequest question, boolean unlocked, Answer[] answers) {
     this.question = question;
-    this.status = status;
+    this.unlocked = unlocked;
+    this.answers = answers;
   }
 
   public GetQuestionDetailsResponse() {
     this.question = new CreateQuestionRequest();
-    this.status = false;
+    this.unlocked = false;
+    this.answers = new Answer[MonocleServer.answers.size()];
   }
 
   public CreateQuestionRequest getQuestion() {
@@ -26,11 +30,19 @@ public class GetQuestionDetailsResponse {
     this.question = question;
   }
 
-  public boolean isStatus() {
-    return status;
+  public boolean isUnlocked() {
+    return unlocked;
   }
 
-  public void setStatus(boolean status) {
-    this.status = status;
+  public void setUnlocked(boolean unlocked) {
+    this.unlocked = unlocked;
+  }
+
+  public Answer[] getAnswers() {
+    return answers;
+  }
+
+  public void setAnswers(Answer[] answers) {
+    this.answers = answers;
   }
 }
